@@ -12,7 +12,10 @@ import logger from 'morgan'
 import createDebug from 'debug' //👈
 //Import para crear Dirname
 import { fileURLToPath } from 'node:url'
-import { dirname } from 'node:path';
+import { dirname } from 'node:path'
+
+//importando el template engine Handlebars
+import hbs from 'hbs'
 
 //creacion del objeto debug
 const debug = createDebug('dwssr1-2026:server') //👆
@@ -25,6 +28,9 @@ const __dirname = dirname(__filename);
 import indexRouter from '#routes/index.js'
 import usersRouter from '#routes/users.js'
 
+//Importando el registro del helper
+import { registerViteHelper } from '#lib/vite.js'
+
 
 //Crea la aplicacion express
 debug('🪄Creando backend')
@@ -34,10 +40,17 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+registerViteHelper(app) //Registrando el helper de Vite para Handlebars
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//Archivos estaticos para produccion 
+if (process.env.NODE_ENV === 'production')  {
+  app.use(express.static(path.join(__dirname, '..', 'dist')));
+}
 
 //configura la carpeta de archivos estaticos
 debug('🪄Creando servidor de archivos estaticos')
