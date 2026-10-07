@@ -2,4 +2,4 @@
 import './styles/main.css'
 
 //Imprimienffo en consola
-console.log ("🎉 VITE ⚡ + EXPRESS 🚂Working!! ")
+console.log ("🎉 VITE ⚡ + EXPRESS 🚂Working!! ");

@@ -12,25 +12,25 @@ import logger from 'morgan'
 import createDebug from 'debug' //👈
 //Import para crear Dirname
 import { fileURLToPath } from 'node:url'
-import { dirname } from 'node:path'
 
 //importando el template engine Handlebars
-import hbs from 'hbs'
+import hbs from 'hbs';
+
+import { registerViteHelper } from '#lib/vite.js'
 
 //creacion del objeto debug
 const debug = createDebug('dwssr1-2026:server') //👆
 
 //Creando la variable 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 //Importar las rutas de la aplicacion
 import indexRouter from '#routes/index.js'
 import usersRouter from '#routes/users.js'
 
 //Importando el registro del helper
-import { registerViteHelper } from '#lib/vite.js'
-
+ 
 
 //Crea la aplicacion express
 debug('🪄Creando backend')
@@ -40,7 +40,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-registerViteHelper(app) //Registrando el helper de Vite para Handlebars
+registerViteHelper(hbs); //Registrando el helper de Vite para Handlebars
 
 app.use(logger('dev'));
 app.use(express.json());

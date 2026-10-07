@@ -22,10 +22,12 @@
   },
   "devDependencies": {
     "concurrently": "^10.0.5",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "vite": "^5.4.21"
   },
   "imports": {
     "#server/*": "./server/*",
-    "#routes/*": "./server/routes/*"
+    "#routes/*": "./server/routes/*",
+    "#lib/*": "./server/lib/*"
   }
 }

@@ -6,6 +6,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dirname } from 'node:path'
 
+import Handlebars from 'handlebars'
+
 //Creando la variable de rutas
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,7 +35,7 @@ export function viteAssets() {
     }
     //En produccion leemos el manifest 
     //y generamos las etiquetas finales de produccion 
-    const manifest = path.join(__dirname, '..','..', 'dist', '.vite', 'manifest.json')
+    const manifestPath = path.join(__dirname, '..','..', 'dist', '.vite', 'manifest.json')
     
     //Si no existe el manifest
     if (!fs.existsSync(manifestPath)) {
@@ -69,8 +71,10 @@ export function viteAssets() {
     */    
    export function registerViteHelper(hbs) {
     hbs.registerHelper('viteAssets', () => {
-        return new hbs.SafeString(viteAssets())
+       
         //Sanitizando la salida del helper 
+    return new hbs.SafeString(viteAssets())
+
         
     })      
    }
