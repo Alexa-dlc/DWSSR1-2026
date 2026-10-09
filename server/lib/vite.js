@@ -47,7 +47,7 @@ export function viteAssets() {
 //de los archicvos de front-end
     const manifestData = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
     //Obteniendo la ruta del punto de entrada del front-end 
-    const mainEntry = manifest['main.js']
+    const mainEntry = manifestData['main.js']
     // Guarda el main.js 
     if(!mainEntry) {
         console.warn ('Archivo main.js no esta disponible en el manifest de vite')
