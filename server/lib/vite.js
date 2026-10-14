@@ -6,7 +6,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dirname } from 'node:path'
 
-import Handlebars from 'handlebars'
+//import Handlebars from 'handlebars'
 
 //Creando la variable de rutas
 const __filename = fileURLToPath(import.meta.url);
