@@ -2,6 +2,8 @@
 import {defineConfig} from 'vite';
 //Importando un admin de rutas
 import { resolve } from 'node:path';
+//Importando tailwindcss
+import tailwindcss from '@tailwindcss/vite';
 
 //Import para crear Dirname
 import { fileURLToPath } from 'node:url'
@@ -10,16 +12,30 @@ import { dirname } from 'node:path'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const handlebarsReload = {
+    name: 'handlebars-reload',
+    configureServer(server) {
+        const viewsDirectory = resolve(__dirname, 'server/views');
+        server.watcher.add(viewsDirectory);
+        server.watcher.on('change', (file) => {
+            if (file.endsWith('.hbs')) {
+                server.ws.send({ type: 'full-reload' });
+            }
+        });
+    },
+};
 
 export default defineConfig({
     //Director de Raiz de los archivos fuente del front-end
     root: 'src',
+    //Agregadno a vite el plugin de tailwindcss
+    plugins: [tailwindcss(), handlebarsReload],
     //Configurar un servidor de desarrollo
     server: {
         //Puerto de escucha
         port: 5173,
         //Rigidez del puerto
-        strict: true,
+        strictPort: true,
     },
     //Configurando el Build
     build:{

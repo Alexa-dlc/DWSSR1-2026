@@ -1,0 +1,10 @@
+{
+  //Tamaño de la fuente del editor (px)
+  "editor.fontSize": 14,
+  //Tamaño de la fuente del terminal integrada (px)
+  "terminal.integrated.fontSize": 14,
+
+  //Tamaño de independencia (esoacio)
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true
+}

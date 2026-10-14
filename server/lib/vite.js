@@ -21,7 +21,10 @@ export function viteAssets() {
     //Obtener modo de ejecucion
     const isDev = process.env.NODE_ENV !== 'production' ;
     //Rescatando la URL del servidor de desarrollo 
-    const viteDevServer = process.env.VITE_DEV_SERVER || 'http://localhost:5173'
+    const codespaceHost = process.env.CODESPACE_NAME && process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN
+        ? `https://${process.env.CODESPACE_NAME}-5173.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`
+        : 'http://localhost:5173'
+    const viteDevServer = process.env.VITE_DEV_SERVER || codespaceHost
 
     //Si estamos en modo de desarrollo
     if (isDev) {
