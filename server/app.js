@@ -1,73 +1,70 @@
-//Funcion para manejar errores en la aplicacion 
+// Funcion para manejar errores en la aplicacion 
 import createError from 'http-errors'
-//Importar el framework express
+// Importar el framework express
 import express from 'express'
-//Imprtar modulos para el manejo de rutas
+// Imprtar modulos para el manejo de rutas
 import path from 'node:path'
-//Importar modulos para el manejo de cookies 
+// Importar modulos para el manejo de cookies 
 import cookieParser from 'cookie-parser'
-//Importar modulos para el manejo de logs
+// Importar modulos para el manejo de logs
 import logger from 'morgan'
-//Importando biblioteca de debug
-import createDebug from 'debug' //👈
-//Import para crear Dirname
+// Importando biblioteca de debug
+import createDebug from 'debug' // 👈
+// Import para crear Dirname
 import { fileURLToPath } from 'node:url'
-
-//importando el template engine Handlebars
+// importando el template engine Handlebars
 import hbs from 'hbs';
-
 import { registerViteHelper } from '#lib/vite.js'
-
-//creacion del objeto debug
-const debug = createDebug('dwssr1-2026:server') //👆
-
-//Creando la variable 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-//Importar las rutas de la aplicacion
+// Importar las rutas de la aplicacion
 import indexRouter from '#routes/index.js'
 import usersRouter from '#routes/users.js'
 
-//Importando el registro del helper
+
+// creacion del objeto debug
+const debug = createDebug('dwssr1-2026:server') // 👆
+// Creando la variable 
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
+
+// Importando el registro del helper
  
 
-//Crea la aplicacion express
+// Crea la aplicacion express
 debug('🪄Creando backend')
-var app = express();
+const app = express();
 
-//Configura el motor de vistas 
-app.set('views', path.join(__dirname, 'views'));
+// Configura el motor de vistas 
+app.set('views', path.join(dirname, 'views'));
 app.set('view engine', 'hbs');
 
-registerViteHelper(hbs); //Registrando el helper de Vite para Handlebars
+registerViteHelper(hbs); // Registrando el helper de Vite para Handlebars
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//Archivos estaticos para produccion 
+// Archivos estaticos para produccion 
 if (process.env.NODE_ENV === 'production')  {
-  app.use(express.static(path.join(__dirname, '..', 'dist')));
+  app.use(express.static(path.join(dirname, '..', 'dist')));
 }
 
-//configura la carpeta de archivos estaticos
+// configura la carpeta de archivos estaticos
 debug('🪄Creando servidor de archivos estaticos')
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(dirname, '..', 'public')));
 
-//Registrando las rutas de la aplicacion
+// Registrando las rutas de la aplicacion
 debug('🛣️Registrando rutas')
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // Manejo de error 
-app.use(function(err, req, res, _next) {
+app.use((err, req, res, _next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -77,14 +74,14 @@ app.use(function(err, req, res, _next) {
   res.render('error');
 });
 
-//Ejemplo de codigo inalcanzable 
-//((()=>{
+// Ejemplo de codigo inalcanzable 
+// ((()=>{
 //  let age = 10 
 //  if (age ==10){
 //    console.log("Codigo")
 //  }
 //  return age 
-//})())
+// })())
 
-//module.exports = app;
+// module.exports = app;
 export default app;

@@ -3,91 +3,85 @@
 /**
  * Module dependencies.
  */
+import http from "node:http";
+import createDebug from "debug";
+import app from "../app.js";
 
-import app from '../app.js'
-//Importando Debug
-import createDebug from 'debug'
-import http from 'node:http'
-//Creacion del objeto debug
-const debug = createDebug('dwssr1-2026:server')
-
-/**
- * Get port from environment and store in Express.
- */
-
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-const server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+// Importando Debug y creación del objeto debug
+const debug = createDebug("dwssr1-2026:server");
 
 /**
  * Normalize a port into a number, string, or false.
  */
+const normalizePort = (val) => {
+  // Evitamos 'no-shadow' cambiando el nombre de la variable interna a 'parsedPort'
+  const parsedPort = parseInt(val, 10);
 
-function normalizePort(val) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
+  // Usamos Number.isNaN en lugar de isNaN (no-restricted-globals)
+  if (Number.isNaN(parsedPort)) {
     // named pipe
     return val;
   }
 
-  if (port >= 0) {
+  if (parsedPort >= 0) {
     // port number
-    return port;
+    return parsedPort;
   }
 
   return false;
-}
+};
+
+/**
+ * Get port from environment and store in Express.
+ */
+const port = normalizePort(process.env.PORT || "3000");
+app.set("port", port);
+
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
 
 /**
  * Event listener for HTTP server "error" event.
  */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
+const onError = (error) => {
+  if (error.syscall !== "listen") {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? `Pipe ${port}` 
-    : `Port ${port}`
+  const bind = typeof port === "string" ? `Pipe ${port}` : `Port ${port}`;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case 'EACCES':
-      console.error(`${bind} requires elevated privileges`)
+    case "EACCES":
+      // eslint-disable-next-line no-console
+      console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
-    case 'EADDRINUSE':
-      console.error(`${bind} is already in use`)
+    case "EADDRINUSE":
+      // eslint-disable-next-line no-console
+      console.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
       throw error;
   }
-}
+};
 
 /**
  * Event listener for HTTP server "listening" event.
  */
-
-function onListening() {
+const onListening = () => {
   const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? `Pipe ${addr}`
-    : `Port ${addr.port}`;
+  const bind = typeof addr === "string" ? `Pipe ${addr}` : `Port ${addr.port}`;
   debug(`💻Listening on ${bind}`);
-}
+};
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+// Ahora que las funciones están definidas arriba, podemos llamarlas sin el error 'no-use-before-define'
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);

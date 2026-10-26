@@ -43,3 +43,25 @@ Esta asignatura proporciona al perfil del ingeniero en ITICS las competencias ne
 | 🌿 `branch`    | Rama                 | Crear o trabajar con una nueva rama.                           |
 | 🔄 `update`    | Actualización        | Actualizar archivos, dependencias o componentes existentes.    |
 
+# Guía de estilo para JavaScript
+
+El proyecto usa Airbnb Base para JavaScript junto con Prettier. La configuración
+de ESLint aplica las reglas de Airbnb en el servidor, el cliente y la configuración
+de Vite; `eslint-config-prettier` desactiva las reglas de formato de ESLint que
+podrían entrar en conflicto con Prettier. En VS Code, Prettier formatea
+JavaScript al guardar y ESLint aplica sus correcciones automaticas.
+
+Las dependencias se instalan con:
+
+```sh
+npm install
+```
+
+Comandos disponibles:
+
+```sh
+npm run lint:all      # Revisa servidor, cliente y configuracion de Vite
+npm run lint:fix      # Aplica las correcciones automaticas de ESLint
+npm run format        # Formatea JavaScript con Prettier
+npm run format:check  # Comprueba el formato sin modificar archivos
+```

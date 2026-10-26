@@ -12,10 +12,13 @@
     "build": "vite build",
     "preview": "npm run build && vite start",
     "greet": "echo 'Hola mundo'",
-    "lint:all": "npm run lint:back && npm run lint:front",
     "lint:back": "eslint \"server/**/*.js\"",
     "lint:front": "eslint \"src/**/*.js\" ",
-    "lint:fix": "eslint --fix"
+    "lint:config": "eslint \"vite.config.js\"",
+    "lint:all": "npm run lint:back && npm run lint:front && npm run lint:config",
+    "lint:fix": "eslint --fix \"server/**/*.js\" \"src/**/*.js\" \"vite.config.js\"",
+    "format": "prettier --write \"server/**/*.js\" \"src/**/*.js\" \"vite.config.js\" \".eslintrc.cjs\"",
+    "format:check": "prettier --check \"server/**/*.js\" \"src/**/*.js\" \"vite.config.js\" \".eslintrc.cjs\""
   },
   "dependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.64.6",
@@ -27,13 +30,14 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "concurrently": "^10.0.5",
-    "eslint": "^10.12.0",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.13.0",
+    "eslint-plugin-import": "^2.32.0",
     "nodemon": "^3.1.14",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4.3.3",
     "vite": "^5.4.21"
   },

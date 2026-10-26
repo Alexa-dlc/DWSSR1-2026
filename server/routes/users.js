@@ -1,10 +1,11 @@
-//const express = require('express');
+// const express = require('express');
 import express from 'express';
+
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, _next) {
-  res.send('<h1 style="color: blue;">Lista de usuarios no deseados</h1>');
+router.get('/', (req, res, _next) => {
+  res.send('<h1 style="color: blue;">Lista de Amigas</h1>');
 });
 
 export default router;
